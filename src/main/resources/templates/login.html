@@ -4,13 +4,14 @@
 <head>
     <title>My Spring Security Demo</title>
 </head>
+
 <body>
-<h2>Create a new user:</h2>
-<form method="POST" th:object="${user}">
+<h2>Please log in:</h2>
+<form method="POST" th:action="@{/login}">
     <label>Username: </label>
-    <input type="text" th:field="*{username}"/><br/>
+    <input type="text" /><br/>
     <label>Password: </label>
-    <input type="password" th:field="*{password}"/><br/>
+    <input type="password" /><br/>
     <label>Confirm password: </label>
     <input type="password" name="confirm" disabled/><br/>
     <input type="submit"/>

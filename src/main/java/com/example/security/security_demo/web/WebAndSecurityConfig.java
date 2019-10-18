@@ -16,19 +16,18 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebSecurity
-public class WebConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
-    @Qualifier("userRepoUserDetailsService")
+public class WebAndSecurityConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
+    //@Qualifier("userRepoUserDetailsService")
     @Autowired
     private UserDetailsService userDetailsService;
 
     @Bean
     public PasswordEncoder encoder() {
-        return new StandardPasswordEncoder("53cr3t");
+        return new StandardPasswordEncoder("053cr3t");
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth)
-            throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .userDetailsService(userDetailsService)
                 .passwordEncoder(encoder());
@@ -36,12 +35,22 @@ public class WebConfig extends WebSecurityConfigurerAdapter implements WebMvcCon
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/home").access("hasRole('ROLE_USER')");
-        http.authorizeRequests().antMatchers("/register").permitAll();
+        http
+            .authorizeRequests()
+                .antMatchers("/register").permitAll()
+                .antMatchers("/").access("hasRole('ROLE_USER')")
+        .and()
+            .formLogin()
+                .loginPage("/login")
+                .defaultSuccessUrl("/home")
+        .and()
+            .logout()
+                .logoutSuccessUrl("/register");
     }
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("home");
+        registry.addViewController("/login");
     }
 }
