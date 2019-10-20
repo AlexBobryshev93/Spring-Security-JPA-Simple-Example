@@ -42,10 +42,10 @@ public class WebAndSecurityConfig extends WebSecurityConfigurerAdapter implement
         .and()
             .formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/home")
+                .defaultSuccessUrl("/")
         .and()
             .logout()
-                .logoutSuccessUrl("/register");
+                .logoutSuccessUrl("/login");
     }
 
     @Override
