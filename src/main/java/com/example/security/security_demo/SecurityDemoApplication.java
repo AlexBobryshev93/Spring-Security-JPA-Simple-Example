@@ -17,7 +17,7 @@ public class SecurityDemoApplication {
 
     @Bean
     public CommandLineRunner dataLoader(UserRepo userRepo, PasswordEncoder encoder) {
-        return new CommandLineRunner() {
+        return new CommandLineRunner() { // should be remade with data.sql
             @Override
             public void run(String... args) throws Exception {
                 User user = new User();
