@@ -7,11 +7,11 @@
 
 <body>
 <h2>Please log in:</h2>
-<form method="POST" th:action="@{/login}">
+<form method="POST">
     <label>Username: </label>
-    <input type="text" /><br/>
+    <input type="text" name="username"/><br/>
     <label>Password: </label>
-    <input type="password" /><br/><br/>
+    <input type="password" name="password"/><br/><br/>
     <input type="submit"/>
 </form>
 <h2>or <a th:href="@{/register}">register</a></h2>
