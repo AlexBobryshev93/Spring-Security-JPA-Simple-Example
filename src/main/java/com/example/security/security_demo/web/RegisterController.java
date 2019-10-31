@@ -5,10 +5,7 @@ import com.example.security.security_demo.repo.UserRepo;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/register")
@@ -24,11 +21,17 @@ public class RegisterController {
     @GetMapping
     public String registerForm(Model model) {
         model.addAttribute("user", new User());
+        model.addAttribute("errMsg", "");
         return "register";
     }
 
     @PostMapping
-    public String registerUser(@ModelAttribute("user") User user) { // not finished yet
+    public String registerUser(@ModelAttribute("user") User user, Model model) {
+        if (!user.getPassword().equals(user.getConfirmPassword())) {
+            model.addAttribute("errMsg", "Error: check your password and try again");
+            return "register";
+        }
+
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepo.save(user);
         System.out.println(userRepo.findByUsername(user.getUsername()));

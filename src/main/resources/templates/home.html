@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <title>My Spring Security Demo</title>
 </head>
@@ -9,6 +9,6 @@
 <form method="POST" th:action="@{/logout}">
     <input type="submit" value="Logout"/>
 </form>
-<h2>Hello, world!</h2>
+<h2>Hello, <span sec:authentication="name"></span>!</h2>
 </body>
 </html>
