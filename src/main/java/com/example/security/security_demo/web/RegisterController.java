@@ -32,6 +32,11 @@ public class RegisterController {
             return "register";
         }
 
+        if (userRepo.findByUsername(user.getUsername()) != null) {
+            model.addAttribute("errMsg", "Error: user with such name already exists");
+            return "register";
+        }
+
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepo.save(user);
         System.out.println(userRepo.findByUsername(user.getUsername()));
